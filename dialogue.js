@@ -64,7 +64,6 @@ var findEndOfPhrase = function (endIndex) {
 	}
 	
 	var remainingTextLength = text.length - currentIndex;
-	console.log(remainingTextLength);
 
 	if (!lastSpace || remainingTextLength <= endIndex) {
 		lastSpace = endIndex;
@@ -114,7 +113,6 @@ $(function () {
 			/* Back to start of string */
 			currentIndex = 0;
 			nextCutoff = findEndOfPhrase(maxLength);
-			console.log("nextCutoff: " + nextCutoff + ", called with maxLength: " + maxLength);
 		}
 
 		if (nextCutoff >= text.length) {
@@ -133,5 +131,3 @@ $(function () {
 		}
 	});
 });
-
-// TODO - why does "New stuff" split into 2 pages?
