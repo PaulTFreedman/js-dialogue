@@ -93,6 +93,15 @@ var playSound = function() {
 	}
 }
 
+
+function onFontSizeChange(isIncreasing) {
+	var fontSize = $("#text_target").css("font-size");
+	var fontSizeNum = fontSize.slice(0, -2);
+	var newFontSize = isIncreasing ? ++fontSizeNum : --fontSizeNum;
+	newFontSize += "px";
+	$("#text_target").css("font-size", newFontSize);
+}
+
 $(function () {
 	$("#input-text").val(text);
 	

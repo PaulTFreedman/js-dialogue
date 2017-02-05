@@ -12,22 +12,22 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<div>
-				<div class="modal-content">
-					<div id="dialogue-box" class="dialogue-box">
-						<div class="item">
-							<p id="text_target"></p>
-						</div>
-						<div id="end_markers" class="item">
-							<img id="triangle_marker" class="sub-item" src="triangle.png"/>
-							<img id="square_marker" class="sub-item" src="square.jpg"/>
-						</div>
-					</div>
-				</div>			
+			<div id="dialogue-box" class="dialogue-box">
+				<div class="item">
+					<p id="text_target"></p>
+				</div>
+				<div id="end_markers" class="item">
+					<img id="triangle_marker" class="sub-item" src="triangle.png"/>
+					<img id="square_marker" class="sub-item" src="square.jpg"/>
+				</div>
 			</div>
 			
 			<div class="input-area">
-				<textarea id="input-text" class="input-text"/>
+				<div class="font-buttons">
+					<button onclick="onFontSizeChange(false)">-</button>
+					<button onclick="onFontSizeChange(true)">+</button>
+				</div>
+				<textarea id="input-text" class="input-text"></textarea>
 			</div>
 		</div>
 	</body>
