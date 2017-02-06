@@ -12,4 +12,3 @@ Any pull requests from potential collaborators would be welcome!
 
 #To-Dos
 - Enable Enter press to advance text
-- Investigate buggy behaviour of square/triangle icons
