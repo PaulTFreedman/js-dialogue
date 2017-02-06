@@ -119,11 +119,9 @@ $(function () {
 		}
 
 		if (nextCutoff >= text.length) {
-			$("#triangle_marker").css("display", "none");
-			$("#square_marker").css("display", "block");
+			$("#end_markers").css("background", "url(\"square.jpg\")");
 		} else {
-			$("#triangle_marker").css("display", "block");
-			$("#square_marker").css("display", "none");
+			$("#end_markers").css("background", "url(\"triangle.png\")");
 		}
 
 		if (finishedPage == true) {
