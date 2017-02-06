@@ -1,12 +1,15 @@
 var currentIndex = 0;
-var maxLength = 140;
+var maxLength = 100;
 var nextCutoff = maxLength;
 var clicked = false;
 var finishedPage = false;
 var delay = 100;
 var audioElementChooser = 1;
 
-var text = 'This is a Zelda-inspired dialogue engine. Add text on a new line to force a new page.\nLike.\nThis.\nAny very long sentences will spread to a new page, divided using the last possible space - This long sentence will serve as an example!';
+var text = 'This is a Zelda-inspired dialogue engine. Add text here to see it displayed above.\n\
+Move to a new line to force a new page.\nLike.\nThis.\n\
+Lines can be no more than 100 characters long, but if you want to make long sentences...\n\
+...you could always do this.\nUse the + and - buttons to change the font size.\nEnjoy!';
 
 /*
 target   - The DOM object to act on
@@ -15,11 +18,10 @@ index    - Which letter within the message we are examining in this pass (always
 interval - How long until function calls itself
  */
 var showText = function (target, message, index, interval) {
-
 	if (currentIndex == nextCutoff) {
 		var limit = Math.min(text.length, (nextCutoff + maxLength));
 
-		nextCutoff = findEndOfPhrase(limit);
+		nextCutoff = findEndOfLine(limit);
 		finishedPage = true;
 		return;
 	}
@@ -40,10 +42,8 @@ var showText = function (target, message, index, interval) {
 	}, interval);
 };
 
-var findEndOfPhrase = function (endIndex) {
+var findEndOfLine = function (endIndex) {
 	var firstNewLine;
-	var lastStopIndex;
-	var lastSpace;
 
 	endIndex = Math.min(endIndex, text.length);
 	
@@ -52,32 +52,13 @@ var findEndOfPhrase = function (endIndex) {
 			firstNewLine = (i + 1);
 			continue;
 		}
+	}
 
-		if (!lastStopIndex && text[i] == "." && text[i - 1] != ".") {
-			lastStopIndex = (i + 1);
-			continue;
-		}
-		
-		if (!lastSpace && text[i] == " ") {
-			lastSpace = (i + 1);
-		}
+	if (firstNewLine === undefined) {
+		return text.length;
 	}
-	
-	var remainingTextLength = text.length - currentIndex;
 
-	if (!lastSpace || remainingTextLength <= endIndex) {
-		lastSpace = endIndex;
-	}
-	
-	if (firstNewLine) {
-		return firstNewLine;
-	} else if (lastStopIndex) {
-		return lastStopIndex;
-	} else if (lastSpace) {
-		return lastSpace;
-	} else {
-		return endIndex;
-	}
+	return firstNewLine;
 }
 
 var playSound = function() {
@@ -93,13 +74,35 @@ var playSound = function() {
 	}
 }
 
+
+function onFontSizeChange(isIncreasing) {
+	var fontSize = $("#text_target").css("font-size");
+	var fontSizeNum = fontSize.slice(0, -2);
+	var newFontSize = isIncreasing ? ++fontSizeNum : --fontSizeNum;
+	newFontSize += "px";
+	$("#text_target").css("font-size", newFontSize);
+}
+
+function onTextInput() {
+	var textArray = $("#input-text").val().split("\n");
+	
+	for(i = 0; i < textArray.length; i++) {
+		var line = textArray[i];
+		line = line.substring(0, maxLength);
+		textArray[i] = line;
+	}
+
+	var validatedText = textArray.join("\n");
+	$("#input-text").val(validatedText);
+}
+
 $(function () {
 	$("#input-text").val(text);
 	
 	$("#triangle_marker").css("display", "block");
 	$("#square_marker").css("display", "none");
 	
-	nextCutoff = findEndOfPhrase(nextCutoff);
+	nextCutoff = findEndOfLine(nextCutoff);
 	showText("#text_target", text.substring(0, nextCutoff), 0, delay);
 
 	/* Click */
@@ -112,15 +115,13 @@ $(function () {
 		if (oldText != text || currentIndex >= text.length) {
 			/* Back to start of string */
 			currentIndex = 0;
-			nextCutoff = findEndOfPhrase(maxLength);
+			nextCutoff = findEndOfLine(maxLength);
 		}
 
 		if (nextCutoff >= text.length) {
-			$("#triangle_marker").css("display", "none");
-			$("#square_marker").css("display", "block");
+			$("#end_markers").css("background", "url(\"square.jpg\")");
 		} else {
-			$("#triangle_marker").css("display", "block");
-			$("#square_marker").css("display", "none");
+			$("#end_markers").css("background", "url(\"triangle.png\")");
 		}
 
 		if (finishedPage == true) {

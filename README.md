@@ -12,4 +12,3 @@ Any pull requests from potential collaborators would be welcome!
 
 #To-Dos
 - Enable Enter press to advance text
-- Set max character count in a more dynamic way, to account for varying screen sizes

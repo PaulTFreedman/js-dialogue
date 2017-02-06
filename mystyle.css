@@ -82,11 +82,30 @@ html, body {
 }
 
 .input-area {
-	height: 150px;
-	margin: 0px 15px 30px 15px;
+  height: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .input-text {
-	height: 100%;
-	width: 100%;
+  flex-grow: 3;
+}
+
+.font-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+button {
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+  margin-bottom: 2px;
+  font-size: 16px;
+}
+
+#end_markers {
+  background: url("triangle.png")
 }
